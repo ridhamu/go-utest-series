@@ -9,6 +9,55 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// best practice is using for benchmarking purpose
+func BenchmarkTable(b *testing.B) {
+	benchmarks := []struct {
+		Name    string
+		Request string
+	}{
+		{
+			Name:    "Muhammad",
+			Request: "Muhammad",
+		},
+		{
+			Name:    "Ridha",
+			Request: "Ridha",
+		},
+	}
+
+	for _, benchmark := range benchmarks {
+		b.Run(benchmark.Name, func(b *testing.B) {
+			for b.Loop() {
+				HelloWorld(benchmark.Request)
+			}
+		})
+	}
+}
+
+func BenchmarkHelloWorldSub(b *testing.B) {
+	b.Run("Muhammad", func(b *testing.B) {
+		for b.Loop() {
+			HelloWorld("Muhammad")
+		}
+	})
+	b.Run("Ridha", func(b *testing.B) {
+		for b.Loop() {
+			HelloWorld("Ridha")
+		}
+	})
+}
+
+func BenchmarkHelloWorldRidha(b *testing.B) {
+	for b.Loop() {
+		HelloWorld("ridha")
+	}
+}
+func BenchmarkHelloWorldMuhammad(b *testing.B) {
+	for b.Loop() {
+		HelloWorld("muhammad")
+	}
+}
+
 // table test
 func TestTableHelloWorld(t *testing.T) {
 	tests := []struct {
